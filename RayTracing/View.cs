@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using System.IO;
+using System.Drawing;
 
 namespace RayTracing
 {
@@ -66,5 +67,31 @@ namespace RayTracing
             GL.UseProgram(BasicProgramID);
             GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
         }
+
+        public void ReDraw()
+        {
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+            GL.Enable(EnableCap.DepthTest);
+            GL.EnableVertexAttribArray(attribute_vpos);
+            GL.DrawArrays(PrimitiveType.Quads, 0, 4);
+            GL.DisableVertexAttribArray(attribute_vpos);
+        }
+
+        public void Setup(int w, int h)
+        {
+            string str = GL.GetString(StringName.ShadingLanguageVersion);
+            GL.ClearColor(Color.DarkGray);
+            GL.ShadeModel(ShadingModel.Smooth);
+
+            Matrix4 perspMat = Matrix4.CreatePerspectiveFieldOfView(
+                MathHelper.PiOver4, w / (float)h, 1, 64);
+            GL.MatrixMode(MatrixMode.Projection);
+            GL.LoadMatrix(ref perspMat);
+
+            Matrix4 viewMat = Matrix4.LookAt(0, 0, 3, 0, 0, 0, 0, 1, 0);
+            GL.MatrixMode(MatrixMode.Modelview);
+            GL.LoadMatrix(ref viewMat);
+        }
+
     }
 }

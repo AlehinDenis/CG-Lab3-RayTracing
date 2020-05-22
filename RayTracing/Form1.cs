@@ -16,6 +16,7 @@ namespace RayTracing
     public partial class Form1 : Form
     {
         View view;
+        bool loaded = false;
 
         public Form1()
         {
@@ -25,13 +26,20 @@ namespace RayTracing
 
         private void glControl1_Load(object sender, EventArgs e)
         {
-            
+            loaded = true;
+            view.Setup(glControl1.Width, glControl1.Height);
+            view.InitShaders();
+            view.DrawQuad();
         }
 
         private void glControl1_Paint(object sender, PaintEventArgs e)
         {
-            view.InitShaders();
-            view.DrawQuad();
+            if (loaded)
+            {
+                view.ReDraw();
+                glControl1.SwapBuffers();
+                GL.UseProgram(0);
+            }
         }
     }
 }
