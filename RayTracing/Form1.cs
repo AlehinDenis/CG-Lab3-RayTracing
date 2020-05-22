@@ -27,6 +27,7 @@ namespace RayTracing
         private void glControl1_Load(object sender, EventArgs e)
         {
             loaded = true;
+            GL.Viewport(0, 0, glControl1.Width, glControl1.Height);
             view.Setup(glControl1.Width, glControl1.Height);
             view.InitShaders();
             view.DrawQuad();
