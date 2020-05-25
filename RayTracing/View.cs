@@ -7,12 +7,13 @@ using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using System.IO;
 using System.Drawing;
+using GLint = System.Int32;
 
 namespace RayTracing
 {
     class View
     {
-        private int BasicProgramID;
+        public int BasicProgramID;
         private int BasicVertexShader;
         private int BasicFragmentShader;
         private Vector3[] vertdata;

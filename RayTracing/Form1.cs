@@ -31,6 +31,8 @@ namespace RayTracing
             view.Setup(glControl1.Width, glControl1.Height);
             view.InitShaders();
             view.DrawQuad();
+            int MatID = GL.GetUniformLocation(view.BasicProgramID, "MaterialId");
+            GL.Uniform1(MatID, trackBar1.Value);
         }
 
         private void glControl1_Paint(object sender, PaintEventArgs e)
@@ -41,6 +43,18 @@ namespace RayTracing
                 glControl1.SwapBuffers();
                 GL.UseProgram(0);
             }
+        }
+
+        private void trackBar1_ValueChanged(object sender, EventArgs e)
+        {
+            view.Setup(glControl1.Width, glControl1.Height);
+            view.InitShaders();
+            view.DrawQuad();
+            int MatID = GL.GetUniformLocation(view.BasicProgramID, "MaterialId");
+            GL.Uniform1(MatID, trackBar1.Value);
+            view.ReDraw();
+            glControl1.SwapBuffers();
+            GL.UseProgram(0);
         }
     }
 }

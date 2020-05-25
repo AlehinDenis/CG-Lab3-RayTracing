@@ -10,6 +10,7 @@ const int MIRROR_REFLECTION = 2;
 
 out vec4 FragColor;
 in vec3 glPosition;
+uniform int MaterialId;
 
 struct SCamera
 {
@@ -106,61 +107,61 @@ void initializeDefaultScene()
 	triangles[0].v1 = vec3(-5.0,-5.0,-8.0); 
 	triangles[0].v2 = vec3(-5.0, 5.0, 5.0); 
 	triangles[0].v3 = vec3(-5.0, 5.0,-8.0); 
-	triangles[0].MaterialIdx = 0; 
+	triangles[0].MaterialIdx = MaterialId; 
     	triangles[1].v1 = vec3(-5.0,-5.0,-8.0);
 	triangles[1].v2 = vec3(-5.0,-5.0, 5.0);
 	triangles[1].v3 = vec3(-5.0, 5.0, 5.0); 
-	triangles[1].MaterialIdx = 0;
+	triangles[1].MaterialIdx = MaterialId;
 	
 	/*back wall*/
 	triangles[2].v1 = vec3(-5.0, 5.0, 5.0); 
 	triangles[2].v2 = vec3(-5.0, -5.0, 5.0); 
 	triangles[2].v3 = vec3(5.0, -5.0, 5.0); 
-	triangles[2].MaterialIdx = 1; 
+	triangles[2].MaterialIdx = (MaterialId + 1) % 6; 
     	triangles[3].v1 = vec3(5.0,-5.0, 5.0);
 	triangles[3].v2 = vec3(5.0, 5.0, 5.0);
 	triangles[3].v3 = vec3(-5.0, 5.0, 5.0); 
-	triangles[3].MaterialIdx = 1;
+	triangles[3].MaterialIdx = (MaterialId + 1) % 6;
 	
 	/*right wall */
 	triangles[4].v1 = vec3(5.0, -5.0, 5.0); 
 	triangles[4].v2 = vec3(5.0, 5.0, 5.0); 
 	triangles[4].v3 = vec3(5.0, 5.0, -8.0); 
-	triangles[4].MaterialIdx = 2; 
+	triangles[4].MaterialIdx = (MaterialId + 2) % 6; 
     	triangles[5].v1 = vec3(5.0, 5.0,-8.0);
 	triangles[5].v2 = vec3(5.0, -5.0, -8.0);
 	triangles[5].v3 = vec3(5.0, -5.0, 5.0); 
-	triangles[5].MaterialIdx = 2;
+	triangles[5].MaterialIdx = (MaterialId + 2) % 6;
 	
 	/*down wall */
 	triangles[6].v1 = vec3(-5.0, 5.0, 5.0); 
 	triangles[6].v2 = vec3(-5.0, 5.0, -8.0); 
 	triangles[6].v3 = vec3(5.0, 5.0, -8.0); 
-	triangles[6].MaterialIdx = 3; 
+	triangles[6].MaterialIdx = (MaterialId + 3) % 6; 
     	triangles[7].v1 = vec3(5.0, 5.0, -8.0); 
 	triangles[7].v2 = vec3(5.0, 5.0, 5.0); 
 	triangles[7].v3 = vec3(-5.0, 5.0, 5.0); 
-	triangles[7].MaterialIdx = 3;
+	triangles[7].MaterialIdx = (MaterialId + 3) % 6;
  
 	/*up wall */
     	triangles[8].v1 = vec3(-5.0, -5.0, 5.0);
 	triangles[8].v2 = vec3(-5.0, -5.0, -8.0);
 	triangles[8].v3 = vec3(5.0, -5.0, -8.0); 
-	triangles[8].MaterialIdx = 4;
+	triangles[8].MaterialIdx = (MaterialId + 4) % 6;
 	triangles[9].v1 = vec3(5.0,-5.0,-8.0);
 	triangles[9].v2 = vec3(5.0, -5.0, 5.0);
 	triangles[9].v3 = vec3(-5.0, -5.0, 5.0); 
-	triangles[9].MaterialIdx = 4;
+	triangles[9].MaterialIdx = (MaterialId + 4) % 6;
 
 	/*front wall*/
 	triangles[10].v1 = vec3(-5.0, -5.0, -8.0);
 	triangles[10].v2 = vec3(5.0, -5.0, -8.0);
 	triangles[10].v3 = vec3(5.0, 5.0, -8.0); 
-	triangles[10].MaterialIdx = 5;
+	triangles[10].MaterialIdx = (MaterialId + 5) % 6;
 	triangles[11].v1 = vec3(5.0, 5.0,-8.0);
 	triangles[11].v2 = vec3(-5.0, 5.0, -8.0);
 	triangles[11].v3 = vec3(-5.0, -5.0, -8.0); 
-	triangles[11].MaterialIdx = 5; 
+	triangles[11].MaterialIdx = (MaterialId + 5) % 6; 
 
 	/** CUBE **/
 	/* left wall */
@@ -254,19 +255,19 @@ void initializeDefaultLightMaterials()
 	materials[2].RefractionCoef = 1.0;  
 	materials[2].MaterialType = DIFFUSE_REFLECTION;
 	
-	materials[3].Color = vec3(1.0, 1.0, 1.0);  
+	materials[3].Color = vec3(0.0, 1.0, 1.0);  
 	materials[3].LightCoeffs = vec4(lightCoefs); 
     	materials[3].ReflectionCoef = 0.5;  
 	materials[3].RefractionCoef = 1.0;  
 	materials[3].MaterialType = DIFFUSE_REFLECTION;
 	
-	materials[4].Color = vec3(1.0, 1.0, 1.0);  
+	materials[4].Color = vec3(1.0, 1.0, 0.0);  
 	materials[4].LightCoeffs = vec4(lightCoefs); 
     	materials[4].ReflectionCoef = 0.5;  
 	materials[4].RefractionCoef = 1.0;  
 	materials[4].MaterialType = DIFFUSE_REFLECTION;
 	
-	materials[5].Color = vec3(1.0, 1.0, 1.0);  
+	materials[5].Color = vec3(1.0, 0.0, 1.0);  
 	materials[5].LightCoeffs = vec4(lightCoefs); 
     	materials[5].ReflectionCoef = 0.5;  
 	materials[5].RefractionCoef = 1.0;  
@@ -353,7 +354,7 @@ bool Raytrace ( SRay ray,  float start, float final, inout SIntersection interse
 			intersect.Point = ray.Origin + ray.Direction * test;  
 			intersect.Normal =               
 			normalize(cross(triangle.v1 - triangle.v2, triangle.v3 - triangle.v2));
-			SMaterial mat = materials[i/2];
+			SMaterial mat = materials[triangle.MaterialIdx];
 			if(i>=12)
 				mat = materials[6];
 			intersect.Color = mat.Color;    
