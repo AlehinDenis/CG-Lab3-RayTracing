@@ -11,6 +11,7 @@ const int MIRROR_REFLECTION = 2;
 out vec4 FragColor;
 in vec3 glPosition;
 uniform int MaterialId;
+uniform int RayTracingDepth;
 
 struct SCamera
 {
@@ -117,51 +118,51 @@ void initializeDefaultScene()
 	triangles[2].v1 = vec3(-5.0, 5.0, 5.0); 
 	triangles[2].v2 = vec3(-5.0, -5.0, 5.0); 
 	triangles[2].v3 = vec3(5.0, -5.0, 5.0); 
-	triangles[2].MaterialIdx = (MaterialId + 1) % 6; 
+	triangles[2].MaterialIdx = (MaterialId + 1) % 7; 
     	triangles[3].v1 = vec3(5.0,-5.0, 5.0);
 	triangles[3].v2 = vec3(5.0, 5.0, 5.0);
 	triangles[3].v3 = vec3(-5.0, 5.0, 5.0); 
-	triangles[3].MaterialIdx = (MaterialId + 1) % 6;
+	triangles[3].MaterialIdx = (MaterialId + 1) % 7;
 	
 	/*right wall */
 	triangles[4].v1 = vec3(5.0, -5.0, 5.0); 
 	triangles[4].v2 = vec3(5.0, 5.0, 5.0); 
 	triangles[4].v3 = vec3(5.0, 5.0, -8.0); 
-	triangles[4].MaterialIdx = (MaterialId + 2) % 6; 
+	triangles[4].MaterialIdx = (MaterialId + 2) % 7; 
     	triangles[5].v1 = vec3(5.0, 5.0,-8.0);
 	triangles[5].v2 = vec3(5.0, -5.0, -8.0);
 	triangles[5].v3 = vec3(5.0, -5.0, 5.0); 
-	triangles[5].MaterialIdx = (MaterialId + 2) % 6;
+	triangles[5].MaterialIdx = (MaterialId + 2) % 7;
 	
 	/*down wall */
 	triangles[6].v1 = vec3(-5.0, 5.0, 5.0); 
 	triangles[6].v2 = vec3(-5.0, 5.0, -8.0); 
 	triangles[6].v3 = vec3(5.0, 5.0, -8.0); 
-	triangles[6].MaterialIdx = (MaterialId + 3) % 6; 
+	triangles[6].MaterialIdx = (MaterialId + 3) % 7; 
     	triangles[7].v1 = vec3(5.0, 5.0, -8.0); 
 	triangles[7].v2 = vec3(5.0, 5.0, 5.0); 
 	triangles[7].v3 = vec3(-5.0, 5.0, 5.0); 
-	triangles[7].MaterialIdx = (MaterialId + 3) % 6;
+	triangles[7].MaterialIdx = (MaterialId + 3) % 7;
  
 	/*up wall */
     	triangles[8].v1 = vec3(-5.0, -5.0, 5.0);
 	triangles[8].v2 = vec3(-5.0, -5.0, -8.0);
 	triangles[8].v3 = vec3(5.0, -5.0, -8.0); 
-	triangles[8].MaterialIdx = (MaterialId + 4) % 6;
+	triangles[8].MaterialIdx = (MaterialId + 4) % 7;
 	triangles[9].v1 = vec3(5.0,-5.0,-8.0);
 	triangles[9].v2 = vec3(5.0, -5.0, 5.0);
 	triangles[9].v3 = vec3(-5.0, -5.0, 5.0); 
-	triangles[9].MaterialIdx = (MaterialId + 4) % 6;
+	triangles[9].MaterialIdx = (MaterialId + 4) % 7;
 
 	/*front wall*/
 	triangles[10].v1 = vec3(-5.0, -5.0, -8.0);
 	triangles[10].v2 = vec3(5.0, -5.0, -8.0);
 	triangles[10].v3 = vec3(5.0, 5.0, -8.0); 
-	triangles[10].MaterialIdx = (MaterialId + 5) % 6;
+	triangles[10].MaterialIdx = (MaterialId + 5) % 7;
 	triangles[11].v1 = vec3(5.0, 5.0,-8.0);
 	triangles[11].v2 = vec3(-5.0, 5.0, -8.0);
 	triangles[11].v3 = vec3(-5.0, -5.0, -8.0); 
-	triangles[11].MaterialIdx = (MaterialId + 5) % 6; 
+	triangles[11].MaterialIdx = (MaterialId + 5) % 7; 
 
 	/** CUBE **/
 	/* left wall */
@@ -455,6 +456,7 @@ void main ( void )
 	while(!isEmpty())
 	{			
 		STracingRay trRay = popRay();
+		if(trRay.depth>RayTracingDepth) break;
 		ray = trRay.ray;
 		SIntersection intersect;
 		intersect.Time = 1000000.0;

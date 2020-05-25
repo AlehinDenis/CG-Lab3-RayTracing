@@ -478,7 +478,7 @@ void main ( void )
 					}
 					vec3 reflectDirection = reflect(ray.Direction, intersect.Normal);
 					float contribution = trRay.contribution * intersect.ReflectionCoef;
-					STracingRay reflectRay = STracingRay(SRay(intersect.Point + reflectDirection * 0.001, reflectDirection),contribution, trRay.depth + 1);
+					STracingRay reflectRay = STracingRay(SRay(intersect.Point + reflectDirection * 0.001, reflectDirection),contribution, trRay.depth);
 					pushRay(reflectRay);
 					break;
 				}
